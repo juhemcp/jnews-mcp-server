@@ -83,7 +83,7 @@ JUHE_NEWS_API_KEY=your_api_key
       "command": "python",
       "args": [
         "-m",
-        "jnews-mcp-server"
+        "jnews_mcp_server"
       ],
       "env": {
         "JUHE_NEWS_API_KEY": "your_api_key"
