@@ -28,7 +28,15 @@ async def handle_list_tools() -> list[types.Tool]:
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "type": {"type": "string", "description": "新闻类型:top(推荐,默认),guonei(国内),guoji(国际),yule(娱乐),tiyu(体育),junshi(军事),keji(科技),caijing(财经),youxi(游戏),qiche(汽车),jiankang(健康)"},
+                    "type": {
+                        "type": "string", "description": "新闻类型:top(推荐,默认),guonei(国内),guoji(国际),yule(娱乐),tiyu(体育),junshi(军事),keji(科技),caijing(财经),youxi(游戏),qiche(汽车),jiankang(健康)",
+                    },
+                    "page": {
+                        "type": "number", "description": "当前页数, 默认1, 最大50"
+                    },
+                    "page_size": {
+                        "type": "number", "description": "每页返回新闻条数, 默认20, 最大50"
+                    },
                 },
                 # "required": ["type"],
             },
@@ -71,13 +79,15 @@ async def handle_call_tool(
         #     )
         # ]
 
-async def get_news_list(type: str = "top") -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
+async def get_news_list(type: str = "top", page: int = 1, page_size: int = 20) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
     """
     根据新闻类型获取今日热点新闻头条.
     """
     url = f"{JUHE_NEWS_API_BASE}/index"
     params = {
         "type": type,
+        "page": page,
+        "page_size": page_size,
         "key": JUHE_NEWS_API_KEY
     }
     async with httpx.AsyncClient() as client:
@@ -145,7 +155,7 @@ async def main():
             write_stream,
             InitializationOptions(
                 server_name="jnews-mcp-server",
-                server_version="0.1.2",
+                server_version="0.1.3",
                 capabilities=server.get_capabilities(
                     notification_options=NotificationOptions(),
                     experimental_capabilities={},

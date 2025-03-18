@@ -8,13 +8,23 @@
 ### Tools
 
 服务器实现了两个工具:
+
 - get_news_list: 根据新闻类型获取今日热点新闻头条
   - 需要传入 "type"（新闻类型）作为选填的字符串参数。
+```
+async def get_news_list(type: str = "top", page: int = 1, page_size: int = 20) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
+```
+
 - get_news_content: 根据新闻类型获取今日热点新闻头条
   - 需要传入 "uniquekey"（新闻id）作为必须的字符串参数。
+```
+async def get_news_content(uniquekey: str) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
+```
+
 
 
 ## Install
+This server requires Python 3.10 or higher. Install dependencies using uv (recommended) or pip
 
 ### Using uv (recommended)
 When using [uv](https://docs.astral.sh/uv/) no specific installation is needed. We will use [uvx](https://docs.astral.sh/uv/guides/tools/) to directly run jnews-mcp-server.
@@ -30,7 +40,7 @@ pip install jnews-mcp-server
 ```
 After installation, you can run it as a script using:
 ```
-python -m mcp_server_time
+python -m jnews_mcp_server
 ```
 
 ### Configuration
@@ -43,8 +53,8 @@ JUHE_NEWS_API_KEY=your_api_key
 
 #### Claude Desktop
 
-On MacOS: `~/Library/Application\ Support/Claude/claude_desktop_config.json`
-On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
+- On MacOS: `~/Library/Application\ Support/Claude/claude_desktop_config.json`
+- On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 
 <details>
   <summary>Using uvx</summary>
